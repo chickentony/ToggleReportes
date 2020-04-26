@@ -17,4 +17,4 @@ use Illuminate\Http\Request;
 //    return $request->user();
 //});
 
-Route::get('/register', );
+Route::post('/register', 'Client\ClientController@register');
