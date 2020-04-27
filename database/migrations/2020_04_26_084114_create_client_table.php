@@ -16,9 +16,9 @@ class CreateClientTable extends Migration
     public function up(): void
     {
         Schema::create('client', static function (Blueprint $table) {
-            $table->bigIncrements('id')->primary();
+            $table->bigIncrements('id');
             $table->string('full_name', 250);
-            $table->string('email', 250);
+            $table->string('email', 250)->unique();
             $table->string('timezone', 250)->nullable();
             $table->integer('workspaces_id')->nullable();
             $table->timestamps();

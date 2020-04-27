@@ -5,8 +5,11 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
+use App\Http\Responses\ResponseFactory;
 use App\Services\Client\RegisterService;
 use App\Services\Validation\ClientForm\ClientValidationForm;
+use GuzzleHttp\Exception\GuzzleException;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -15,6 +18,7 @@ class ClientController extends Controller
     /**
      * @param Request $request
      * @return JsonResponse|null
+     * @throws GuzzleException
      */
     public function register(Request $request): ?JsonResponse
     {
@@ -25,8 +29,15 @@ class ClientController extends Controller
 
         $data = $request->get('data');
         $register = new RegisterService();
-        $register->getUser($data['email'], $data['password']);
+        $register->getClient($data['email'], $data['password']);
+        try {
+            $register->storeClient();
+        } catch (QueryException $e) {
+            return ResponseFactory::create(
+                $request, [], 400, false, "Client with email {$data['email']} already exist"
+            );
+        }
 
-        return new JsonResponse(200);
+        return ResponseFactory::create($request);
     }
 }
