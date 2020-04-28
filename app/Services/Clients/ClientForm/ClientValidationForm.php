@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Services\Validation\ClientForm;
+namespace App\Services\Clients\ClientForm;
 
 use App\Services\Validations\AbstractValidationForm;
 

@@ -2,11 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\Services\Client;
+namespace App\Services\Clients;
 
-use App\Models\Client\ClientModel;
+use App\Models\Clients\ClientsModel;
+use App\Models\Clients\ClientsToken;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
+use Illuminate\Support\Facades\DB;
 
 class RegisterService
 {
@@ -30,11 +32,19 @@ class RegisterService
 
     public function storeClient(): void
     {
-        $clientData = new ClientModel();
+        $clientData = new ClientsModel();
         $clientData->email = $this->response['data']['email'];
         $clientData->full_name = $this->response['data']['fullname'];
         $clientData->timezone = $this->response['data']['timezone'];
         $clientData->save();
     }
 
+    public function storeClientToken(): void
+    {
+        $clientToken = new ClientsToken();
+        $clientId = DB::table('clients')->where('email', 'miroliubov.a@yandex.ru')->value('id');
+        $clientToken->token = $this->response['data']['api_token'];
+        $clientToken->client_id = $clientId;
+        $clientToken->save();
+    }
 }

@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\Models\Client;
+namespace App\Models\Clients;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ClientModel extends Model
+class ClientsModel extends Model
 {
-    protected $table = 'client';
+    protected $table = 'clients';
 
     protected $fillable = [
         'full_name',

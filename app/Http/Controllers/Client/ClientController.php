@@ -6,8 +6,8 @@ namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
 use App\Http\Responses\ResponseFactory;
-use App\Services\Client\RegisterService;
-use App\Services\Validation\ClientForm\ClientValidationForm;
+use App\Services\Clients\ClientForm\ClientValidationForm;
+use App\Services\Clients\RegisterService;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\JsonResponse;
@@ -37,6 +37,7 @@ class ClientController extends Controller
                 $request, [], 400, false, "Client with email {$data['email']} already exist"
             );
         }
+        $register->storeClientToken();
 
         return ResponseFactory::create($request);
     }
