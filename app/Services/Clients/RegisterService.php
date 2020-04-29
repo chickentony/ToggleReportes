@@ -42,7 +42,7 @@ class RegisterService
     public function storeClientToken(): void
     {
         $clientToken = new ClientsToken();
-        $clientId = DB::table('clients')->where('email', 'miroliubov.a@yandex.ru')->value('id');
+        $clientId = DB::table('clients')->where('email', $this->response['data']['email'])->value('id');
         $clientToken->token = $this->response['data']['api_token'];
         $clientToken->client_id = $clientId;
         $clientToken->save();
