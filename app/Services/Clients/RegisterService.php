@@ -5,14 +5,14 @@ declare(strict_types=1);
 namespace App\Services\Clients;
 
 use App\Models\Clients\ClientsModel;
-use App\Models\Clients\ClientsToken;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
-use Illuminate\Support\Facades\DB;
 
 class RegisterService
 {
     private $response;
+
+    private $url = 'https://www.toggl.com/api/v8/me';
 
     /**
      * @param string $email
@@ -22,7 +22,7 @@ class RegisterService
     public function getClient(string $email, string $password): void
     {
         $client = new Client();
-        $request = $client->request('GET', 'https://www.toggl.com/api/v8/me', [
+        $request = $client->request('GET', $this->url, [
             'auth' => [$email, $password]
         ]);
         $this->response = json_decode(
@@ -36,15 +36,7 @@ class RegisterService
         $clientData->email = $this->response['data']['email'];
         $clientData->full_name = $this->response['data']['fullname'];
         $clientData->timezone = $this->response['data']['timezone'];
+        $clientData->token = $this->response['data']['api_token'];
         $clientData->save();
-    }
-
-    public function storeClientToken(): void
-    {
-        $clientToken = new ClientsToken();
-        $clientId = DB::table('clients')->where('email', $this->response['data']['email'])->value('id');
-        $clientToken->token = $this->response['data']['api_token'];
-        $clientToken->client_id = $clientId;
-        $clientToken->save();
     }
 }

@@ -37,7 +37,6 @@ class ClientController extends Controller
                 $request, [], 400, false, "Client with email {$data['email']} already exist"
             );
         }
-        $register->storeClientToken();
 
         return ResponseFactory::create($request);
     }

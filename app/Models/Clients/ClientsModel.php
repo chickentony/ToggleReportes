@@ -13,6 +13,7 @@ class ClientsModel extends Model
     protected $fillable = [
         'full_name',
         'email',
-        'timezone'
+        'timezone',
+        'token'
     ];
 }

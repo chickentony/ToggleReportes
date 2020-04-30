@@ -21,6 +21,7 @@ class CreateClientTable extends Migration
             $table->string('email', 250)->unique();
             $table->string('timezone', 250)->nullable();
             $table->integer('workspaces_id')->nullable();
+            $table->string('token');
             $table->timestamps();
         });
     }
