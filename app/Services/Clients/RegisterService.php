@@ -25,9 +25,7 @@ class RegisterService
         $request = $client->request('GET', $this->url, [
             'auth' => [$email, $password]
         ]);
-        $this->response = json_decode(
-            $request->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR
-        );
+        $this->response = json_decode($request->getBody()->getContents(), true);
     }
 
     public function storeClient(): void
