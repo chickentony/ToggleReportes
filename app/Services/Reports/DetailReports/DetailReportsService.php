@@ -4,10 +4,13 @@ declare(strict_types=1);
 
 namespace App\Services\Reports\DetailReports;
 
+use App\Models\DetailReports\DetailReports;
 use GuzzleHttp\Client;
 
 class DetailReportsService
 {
+    private $response;
+
     public function getDetailReports(int $workspaceId, string $userAgent)
     {
         $client = new Client();
@@ -18,9 +21,16 @@ class DetailReportsService
                 'user_agent' => $userAgent
             ]
         ]);
-        $response = $request->getBody()->getContents();
-        var_dump($response);
+        $this->response = $request->getBody()->getContents();
+//        var_dump($response);
 
+    }
+
+    public function storeDetailReports()
+    {
+        $reports = new DetailReports();
+        $reports->json = $this->response;
+        $reports->save();
     }
 
 }

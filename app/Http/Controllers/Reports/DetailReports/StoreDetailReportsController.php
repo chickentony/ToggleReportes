@@ -20,6 +20,7 @@ class StoreDetailReportsController extends Controller
         $data = $request->get('data');
         $storeReportService = new DetailReportsService();
         $storeReportService->getDetailReports($data['workspace_id'], $data['user_agent']);
+        $storeReportService->storeDetailReports();
 
         return ResponseFactory::create($request);
     }
