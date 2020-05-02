@@ -11,6 +11,8 @@ class DetailReports extends Model
     public $table = 'detail_reports';
 
     public $fillable = [
-        'json'
+        'json',
+        'start_date',
+        'last_date'
     ];
 }

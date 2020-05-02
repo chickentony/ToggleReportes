@@ -18,6 +18,8 @@ class CreateDetailReportsTable extends Migration
         Schema::create('detail_reports', static function (Blueprint $table) {
             $table->increments('id');
             $table->text('json');
+            $table->string('start_date')->nullable();
+            $table->string('last_date')->nullable();
             $table->timestamps();
         });
     }

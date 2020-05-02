@@ -13,8 +13,8 @@ class ReportsValidationForm extends AbstractValidationForm
         return [
             'workspace_id' => 'required|int',
             'user_agent' => 'required|string',
-            'since' => 'date|nullable',
-            'until' => 'date|nullable'
+            'since' => 'required|date|nullable',
+            'until' => 'required|date|nullable'
         ];
     }
 }
