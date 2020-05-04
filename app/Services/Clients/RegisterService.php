@@ -35,6 +35,7 @@ class RegisterService
         $clientData->full_name = $this->response['data']['fullname'];
         $clientData->timezone = $this->response['data']['timezone'];
         $clientData->token = $this->response['data']['api_token'];
+        $clientData->workspaces_id = $this->response['data']['workspaces'][0]['id'];
         $clientData->save();
     }
 }

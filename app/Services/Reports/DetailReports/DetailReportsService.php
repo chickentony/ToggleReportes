@@ -5,10 +5,13 @@ declare(strict_types=1);
 namespace App\Services\Reports\DetailReports;
 
 use App\Models\DetailReports\DetailReports;
+use App\Services\AuthToken\AuthTokenHelper;
 use GuzzleHttp\Client;
 
 class DetailReportsService
 {
+    private $url = 'https://toggl.com/reports/api/v2/details';
+
     private $response;
 
     private $startDate;
@@ -18,13 +21,14 @@ class DetailReportsService
     public function getDetailReports(
         int $workspaceId,
         string $userAgent,
-        string $startDate = null,
-        string $lastDate = null
+        string $startDate,
+        string $lastDate
     ): void
     {
         $client = new Client();
-        $request = $client->request('GET', 'https://toggl.com/reports/api/v2/details', [
-            'auth' => ['fedca7976df47a9ef4bb9ffff81f9c9b', 'api_token'],
+        $token = AuthTokenHelper::getToken('workspaces_id', $workspaceId);
+        $request = $client->request('GET', $this->url, [
+            'auth' => [$token, 'api_token'],
             'query' => [
                 'workspace_id' => $workspaceId,
                 'user_agent' => $userAgent,
@@ -45,5 +49,4 @@ class DetailReportsService
         $reports->last_date = $this->lastDate;
         $reports->save();
     }
-
 }
