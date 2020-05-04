@@ -25,9 +25,7 @@ class RegisterService
         $request = $client->request('GET', $this->url, [
             'auth' => [$email, $password]
         ]);
-        $this->response = json_decode(
-            $request->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR
-        );
+        $this->response = json_decode($request->getBody()->getContents(), true);
     }
 
     public function storeClient(): void
@@ -37,6 +35,7 @@ class RegisterService
         $clientData->full_name = $this->response['data']['fullname'];
         $clientData->timezone = $this->response['data']['timezone'];
         $clientData->token = $this->response['data']['api_token'];
+        $clientData->workspaces_id = $this->response['data']['workspaces'][0]['id'];
         $clientData->save();
     }
 }
