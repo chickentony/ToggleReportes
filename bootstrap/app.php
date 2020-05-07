@@ -40,6 +40,10 @@ $app->singleton(
     Illuminate\Contracts\Debug\ExceptionHandler::class,
     App\Exceptions\Handler::class
 );
+$app->bind(
+    \App\Domain\DetailReports\GetDetailReportsInterface::class,
+    \App\Application\DetailReports\GetDetailReportsService::class
+);
 
 /*
 |--------------------------------------------------------------------------

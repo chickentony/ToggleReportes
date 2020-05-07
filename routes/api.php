@@ -20,3 +20,5 @@ use Illuminate\Http\Request;
 Route::post('/register', 'Client\ClientController@register');
 
 Route::post('/store-detail-reports', 'Reports\DetailReports\StoreDetailReportsController@storeDetailReports');
+
+Route::get('/detail-reports', 'Reports\DetailReports\GetDetailReportsController');
