@@ -30,15 +30,19 @@ class GetDetailReportsService implements GetDetailReportsInterface
         $reports = $this->detailReportsRepository->findAll();
         $json = json_decode($reports[0]->json, true);
         $data = $json['data'];
+        $result = [];
 
         foreach ($data as $key => $value) {
-            var_dump($value['start']);
-//            var_dump(array_keys($value));
-//            foreach ($value as $k => $v) {
-//                var_dump(array_keys($value));
-//            }
+            $val = '2020-04-22';
+            if (preg_match('/\d{4}-\d{2}-\d{2}/', $value['start'], $res)) {
+                foreach ($res as $v) {
+                    if ($v === $val) {
+                        $result[] = $value;
+                    }
+                }
+            }
         }
-//        var_dump($data); die();
-//        return new DetailReportsDisplayDto($data);
+
+        return new DetailReportsDisplayDto($result);
     }
 }
