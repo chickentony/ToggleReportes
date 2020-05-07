@@ -11,13 +11,23 @@ use Illuminate\Http\Request;
 
 class GetDetailReportsController extends Controller
 {
+    /** @var GetDetailReportsInterface */
     private $getDetailReportService;
 
+    /**
+     * GetDetailReportsController constructor.
+     * @param GetDetailReportsInterface $getDetailReportService
+     */
     public function __construct(GetDetailReportsInterface $getDetailReportService)
     {
         $this->getDetailReportService = $getDetailReportService;
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     * ToDo: реализовать get параметры в запросе
+     */
     public function __invoke(Request $request)
     {
         $reports = $this->getDetailReportService->getDetailReports();

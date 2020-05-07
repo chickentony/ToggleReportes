@@ -10,13 +10,21 @@ use App\Repositories\DetailReports\EloquentDetailReportsRepository;
 
 class GetDetailReportsService implements GetDetailReportsInterface
 {
+    /** @var EloquentDetailReportsRepository */
     private $detailReportsRepository;
 
+    /**
+     * GetDetailReportsService constructor.
+     * @param EloquentDetailReportsRepository $detailReportsRepository
+     */
     public function __construct(EloquentDetailReportsRepository $detailReportsRepository)
     {
         $this->detailReportsRepository = $detailReportsRepository;
     }
 
+    /**
+     * @return DetailReportsDisplayDto
+     */
     public function getDetailReports(): DetailReportsDisplayDto
     {
         $reports = $this->detailReportsRepository->findAll();
@@ -25,18 +33,21 @@ class GetDetailReportsService implements GetDetailReportsInterface
         return new DetailReportsDisplayDto($result);
     }
 
-    public function getDetailReportsByDate()
+    /**
+     * @return DetailReportsDisplayDto
+     * ToDo: доделать, сейчас репорты можно достать по точному совпадению даты, то есть за конкретный день.
+     */
+    public function getDetailReportsByDate(): DetailReportsDisplayDto
     {
         $reports = $this->detailReportsRepository->findAll();
         $json = json_decode($reports[0]->json, true);
         $data = $json['data'];
         $result = [];
-
         foreach ($data as $key => $value) {
             $val = '2020-04-22';
-            if (preg_match('/\d{4}-\d{2}-\d{2}/', $value['start'], $res)) {
-                foreach ($res as $v) {
-                    if ($v === $val) {
+            if (preg_match('/\d{4}-\d{2}-\d{2}/', $value['start'], $matches)) {
+                foreach ($matches as $match) {
+                    if ($match === $val) {
                         $result[] = $value;
                     }
                 }

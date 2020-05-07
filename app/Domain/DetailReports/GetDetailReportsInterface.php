@@ -6,7 +6,9 @@ namespace App\Domain\DetailReports;
 
 interface GetDetailReportsInterface
 {
+    /** @return DetailReportsDisplayDto */
     public function getDetailReports(): DetailReportsDisplayDto;
 
-    public function getDetailReportsByDate();
+    /** @return DetailReportsDisplayDto */
+    public function getDetailReportsByDate(): DetailReportsDisplayDto;
 }

@@ -8,6 +8,9 @@ use App\Models\DetailReports\DetailReports;
 
 class EloquentDetailReportsRepository
 {
+    /**
+     * @return array
+     */
     public function findAll(): array
     {
         return DetailReports::all()
