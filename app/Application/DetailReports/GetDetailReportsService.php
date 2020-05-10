@@ -24,11 +24,13 @@ class GetDetailReportsService implements GetDetailReportsInterface
 
     /**
      * @return DetailReportsDisplayDto
+     * ToDo: обавить проверку, если массив пустой возвращать пустой массив
      */
     public function getDetailReports(): DetailReportsDisplayDto
     {
-        $reports = $this->detailReportsRepository->findAll();
-        $result = json_decode($reports[0]->json, true);
+//        $reports = $this->detailReportsRepository->findAll();
+        $reports = $this->detailReportsRepository->findReportByWorkspaceId(3525302);
+        $result = json_decode($reports->json, true);
 
         return new DetailReportsDisplayDto($result);
     }

@@ -16,4 +16,18 @@ class EloquentDetailReportsRepository
         return DetailReports::all()
             ->all();
     }
+
+    public function findReportByWorkspaceId(int $workspaceId)
+    {
+        $model = DetailReports::query()
+            ->where('workspace_id', $workspaceId)
+            ->orderByDesc('created_at')
+            ->first();
+
+        if ($model === null) {
+            return [];
+        }
+
+        return $model;
+    }
 }

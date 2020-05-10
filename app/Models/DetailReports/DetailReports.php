@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $json
  * @property string $start_date
  * @property string $last_date
+ * @property int $workspace_id
  */
 class DetailReports extends Model
 {
@@ -21,6 +22,7 @@ class DetailReports extends Model
     public $fillable = [
         'json',
         'start_date',
-        'last_date'
+        'last_date',
+        'workspace_id'
     ];
 }
