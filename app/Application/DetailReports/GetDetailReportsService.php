@@ -7,6 +7,7 @@ namespace App\Application\DetailReports;
 use App\Domain\DetailReports\DetailReportsDisplayDto;
 use App\Domain\DetailReports\GetDetailReportsInterface;
 use App\Repositories\DetailReports\EloquentDetailReportsRepository;
+use App\Repositories\NotFoundException;
 
 class GetDetailReportsService implements GetDetailReportsInterface
 {
@@ -23,13 +24,15 @@ class GetDetailReportsService implements GetDetailReportsInterface
     }
 
     /**
+     * @param int $workspaceId
      * @return DetailReportsDisplayDto
      * ToDo: обавить проверку, если массив пустой возвращать пустой массив
+     * @throws NotFoundException
      */
-    public function getDetailReports(): DetailReportsDisplayDto
+    public function getDetailReports(int $workspaceId): DetailReportsDisplayDto
     {
 //        $reports = $this->detailReportsRepository->findAll();
-        $reports = $this->detailReportsRepository->findReportByWorkspaceId(3525302);
+        $reports = $this->detailReportsRepository->findReportByWorkspaceId($workspaceId);
         $result = json_decode($reports->json, true);
 
         return new DetailReportsDisplayDto($result);

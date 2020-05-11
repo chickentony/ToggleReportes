@@ -21,4 +21,4 @@ Route::post('/register', 'Client\ClientController@register');
 
 Route::post('/store-detail-reports', 'Reports\DetailReports\StoreDetailReportsController@storeDetailReports');
 
-Route::get('/detail-reports', 'Reports\DetailReports\GetDetailReportsController');
+Route::get('/detail-reports/{id}', 'Reports\DetailReports\GetDetailReportsController');

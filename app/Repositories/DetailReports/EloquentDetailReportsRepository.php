@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Repositories\DetailReports;
 
 use App\Models\DetailReports\DetailReports;
+use App\Repositories\NotFoundException;
 
 class EloquentDetailReportsRepository
 {
@@ -25,7 +26,7 @@ class EloquentDetailReportsRepository
             ->first();
 
         if ($model === null) {
-            return [];
+            throw new NotFoundException("There are no reports with {$workspaceId} workspace id");
         }
 
         return $model;
