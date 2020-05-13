@@ -8,6 +8,11 @@ use App\Models\DetailReports\DetailReports;
 use App\Services\AuthToken\AuthTokenHelper;
 use GuzzleHttp\Client;
 
+/**
+ * Class DetailReportsService
+ * @package App\Services\Reports\DetailReports
+ * ToDo: нужен рефакторинг
+ */
 class DetailReportsService
 {
     private $url = 'https://toggl.com/reports/api/v2/details';
@@ -17,6 +22,8 @@ class DetailReportsService
     private $startDate;
 
     private $lastDate;
+
+    private $worckspaceId;
 
     public function getDetailReports(
         int $workspaceId,
@@ -39,6 +46,7 @@ class DetailReportsService
         $this->response = $request->getBody()->getContents();
         $this->startDate = $startDate;
         $this->lastDate = $lastDate;
+        $this->worckspaceId = $workspaceId;
     }
 
     public function storeDetailReports(): void
@@ -47,6 +55,7 @@ class DetailReportsService
         $reports->json = $this->response;
         $reports->start_date = $this->startDate;
         $reports->last_date = $this->lastDate;
+        $reports->workspace_id = $this->worckspaceId;
         $reports->save();
     }
 }

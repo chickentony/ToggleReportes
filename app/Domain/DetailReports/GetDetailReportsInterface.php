@@ -6,8 +6,11 @@ namespace App\Domain\DetailReports;
 
 interface GetDetailReportsInterface
 {
-    /** @return DetailReportsDisplayDto */
-    public function getDetailReports(): DetailReportsDisplayDto;
+    /**
+     * @param int $workspaceId
+     * @return DetailReportsDisplayDto
+     */
+    public function getDetailReports(int $workspaceId): DetailReportsDisplayDto;
 
     /** @return DetailReportsDisplayDto */
     public function getDetailReportsByDate(): DetailReportsDisplayDto;
