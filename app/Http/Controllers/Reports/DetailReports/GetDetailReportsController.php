@@ -7,6 +7,7 @@ namespace App\Http\Controllers\Reports\DetailReports;
 use App\Domain\DetailReports\GetDetailReportsInterface;
 use App\Http\Controllers\Controller;
 use App\Http\Responses\ResponseFactory;
+use App\Repositories\NotFoundException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -32,7 +33,11 @@ class GetDetailReportsController extends Controller
     public function __invoke(Request $request)
     {
         $workspaceId = (int)$request->route('id');
-        $reports = $this->getDetailReportService->getDetailReports($workspaceId);
+        try {
+            $reports = $this->getDetailReportService->getDetailReports($workspaceId);
+        } catch (NotFoundException $e) {
+            return ResponseFactory::create($request, [], 400, false, $e->getMessage());
+        }
 //        $reports = $this->getDetailReportService->getDetailReportsByDate();
 
         return ResponseFactory::create($request, $reports);

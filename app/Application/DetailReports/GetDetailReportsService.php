@@ -31,9 +31,7 @@ class GetDetailReportsService implements GetDetailReportsInterface
      */
     public function getDetailReports(int $workspaceId): DetailReportsDisplayDto
     {
-        $val = null;
-//        $reports = $this->detailReportsRepository->findReportsByWorkspaceId($workspaceId);
-        $reports = $this->detailReportsRepository->findReportsByDate($workspaceId, $val);
+        $reports = $this->detailReportsRepository->findReportsByWorkspaceId($workspaceId);
         $result = json_decode($reports->json, true);
 
         return new DetailReportsDisplayDto($result);

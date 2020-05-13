@@ -31,14 +31,4 @@ class EloquentDetailReportsRepository
 
         return $model;
     }
-
-    public function findReportsByDate(int $workspaceId, $startDate)
-    {
-        $model = DetailReports::query()
-            ->where('workspace_id', $workspaceId)
-            ->where('start_date', '=', $startDate, 'or', 'start_date', 'null')->first();
-//        var_dump($model);
-
-        return $model;
-    }
 }
