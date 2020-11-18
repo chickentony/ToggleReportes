@@ -16,7 +16,7 @@ class CreateDetailReportsTable extends Migration
     public function up(): void
     {
         Schema::create('detail_reports', static function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->text('json');
             $table->string('start_date')->nullable();
             $table->string('last_date')->nullable();

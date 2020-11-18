@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Services\Reports\DetailReports;
 
 use App\Models\DetailReports\DetailReports;
+use App\Repositories\DetailReports\EloquentDetailReportsRepository;
 use App\Services\AuthToken\AuthTokenHelper;
 use GuzzleHttp\Client;
 
@@ -15,6 +16,9 @@ use GuzzleHttp\Client;
  */
 class DetailReportsService
 {
+
+//    private $detailReportsRepository;
+
     private $url = 'https://toggl.com/reports/api/v2/details';
 
     private $response;
@@ -24,6 +28,11 @@ class DetailReportsService
     private $lastDate;
 
     private $worckspaceId;
+
+//    public function __construct(EloquentDetailReportsRepository $detailReportsRepository)
+//    {
+//        $this->detailReportsRepository = $detailReportsRepository;
+//    }
 
     public function getDetailReports(
         int $workspaceId,
@@ -57,5 +66,20 @@ class DetailReportsService
         $reports->last_date = $this->lastDate;
         $reports->workspace_id = $this->worckspaceId;
         $reports->save();
+    }
+
+    /**
+     * @param $workspaceId
+     * @throws \JsonException
+     */
+    public function storeDetailReportItems($workspaceId)
+    {
+        $reportsRepository = new EloquentDetailReportsRepository();
+        $reports = $reportsRepository->getLastRecordByWorkspaceId($workspaceId);
+        $data = json_decode($reports[0]['json'], true, 512, JSON_THROW_ON_ERROR);
+        foreach ($data['data'] as $key => $value) {
+            var_dump($value['start']);
+
+        }
     }
 }

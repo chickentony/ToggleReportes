@@ -26,6 +26,7 @@ class StoreDetailReportsController extends Controller
             $data['until']
         );
         $storeReportService->storeDetailReports();
+        $storeReportService->storeDetailReportItems($data['workspace_id']);
 
         return ResponseFactory::create($request);
     }

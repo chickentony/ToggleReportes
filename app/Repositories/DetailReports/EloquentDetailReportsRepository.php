@@ -31,4 +31,14 @@ class EloquentDetailReportsRepository
 
         return $model;
     }
+
+    public function getLastRecordByWorkspaceId(int $workspaceId)
+    {
+        return DetailReports::query()
+            ->where('workspace_id', $workspaceId)
+            ->orderByDesc('created_at')
+            ->limit(1)
+            ->get()
+            ->all();
+    }
 }
